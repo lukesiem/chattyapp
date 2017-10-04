@@ -21,8 +21,23 @@ class App extends Component {
       ]
     };
   }
+//sets connection to local host executes a function for recieveing a message
+    componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3001/");
+    this.socket.onopen = () => {
+      this.socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        this.addMessage(data);
+      }
+    }
+  }
 
+//when recieves a message turns JSON into a string
   onMessage(message) {
+  	this.socket.send(JSON.stringify(message));
+  }
+//takes the messages in data and loops through them, adding to the message box
+  addMessage(message) {
     message.id = this.state.messages.length;
     this.setState({messages: this.state.messages.concat([message])});
   }
