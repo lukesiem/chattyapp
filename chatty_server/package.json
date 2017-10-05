@@ -18,6 +18,7 @@
   "homepage": "https://github.com/lukesiem/chattyapp#readme",
   "dependencies": {
     "express": "4.16.1",
+    "uuid": "^3.1.0",
     "ws": "3.2.0"
   }
 }

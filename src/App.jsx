@@ -6,23 +6,13 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 0,
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 1,
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
+      messages:[]
+      
     };
   }
 //sets connection to local host executes a function for recieveing a message
-    componentDidMount() {
+   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001/");
     this.socket.onopen = () => {
       this.socket.onmessage = (event) => {
@@ -31,10 +21,11 @@ class App extends Component {
       }
     }
   }
-
 //when recieves a message turns JSON into a string
   onMessage(message) {
+  	message.type = "postMessage";
   	this.socket.send(JSON.stringify(message));
+
   }
 //takes the messages in data and loops through them, adding to the message box
   addMessage(message) {
@@ -42,15 +33,22 @@ class App extends Component {
     this.setState({messages: this.state.messages.concat([message])});
   }
 
+  onUsernameChange(user){
+  	const pastUsername = this.state.currentUser.name;
+  	this.setState({ currentUser: user });
+  	this.socket.send(JSON.stringify({type: "postNotification", content: `${pastUsername} changed their name to ${user.name}.` }))
+
+  }
+
   render() {
     return (
       <div>
        
         <nav className="navbar">
-          <a href="/" className="navbar-brand">Encouter With The Sublime</a>
+          <a href="/" className="navbar-brand">...</a>
         </nav>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} onMessage={this.onMessage.bind(this)} />
+        <ChatBar currentUser={this.state.currentUser} onUsernameChange={this.onUsernameChange.bind(this)} onMessage={this.onMessage.bind(this)} />
       </div>
     );
   }
