@@ -7,16 +7,19 @@ h1 {
 }
 
  body {
-      background-image: url('https://www.resortcollection.com/wp-content/themes/resortcollection/property-images/summit/summit-beach-resort-panama-city-beach-fl-beach-01.jpg');
-      color: black;
+      background-image: url('/styles/E6a9kxE.gif');
+      webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      overflow: hidden;
       font-family: 'Open Sans', sans-serif;
       font-size: 14px;
       margin: 70px 0;
     }
 
     .chatbar {
-  
-     
+
+
       bottom: 0;
       display: flex;
       left: 0;
@@ -51,6 +54,8 @@ h1 {
     .message.system {
       font-style: italic;
       padding: 5px 20px;
+      color:#ff0000;
+
     }
 
     .message-content,
@@ -58,26 +63,27 @@ h1 {
       overflow: hidden;
       margin: 5px;
       padding: 0 10px;
-      
+
     }
 
     .message-content {
       flex: 8;
       color:white;
-      background-color: #32cd32;
-     border-radius:20px;
-     width: 100px;
+
 
     }
 
     .message-username {
-      flex: 2;
+      flex: 1;
       font-weight: 700;
-      color:white
+      color:white;
+    background-color: #32cd32;
+     border-radius:20px;
+     width: 10%;
     }
 
     .navbar {
-      
+
       color:white;
       height: 60px;
       left: 0;
@@ -88,6 +94,7 @@ h1 {
     }
 
     .navbar-brand {
+
       color: inherit;
       display: block;
       float: left;
@@ -98,3 +105,6 @@ h1 {
       padding: 0 10px;
       text-decoration: none;
     }
+.userCollectionText{
+  float:right;
+}

@@ -9,7 +9,13 @@ class Message extends Component {
             <span className="message-content">{this.props.content}</span>
           </div>
       );
-    } else {
+    } else if (this.props.type === 'IncommingConnect'){
+    	return (
+    		<div className="message system">
+    		  <span className ="message-content">{ this.props.content}</span>
+    		  </div>
+    		  );
+    }
       return (
           <div className="message">
             <span className="message-username">{this.props.username}</span>
@@ -18,5 +24,5 @@ class Message extends Component {
       );
     }
   }
-}
+
 export default Message;

@@ -4,43 +4,31 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usernameValue: props.currentUser.name,
-      messageValue: ''
+      id:'',
+      username: this.props.name,
+      message: ''
     }
   }
 
-  onMessageKeyDown(event) {
-    const ENTER = 13;
-    if (event.keyCode === ENTER) {
-      this.props.onUsernameChange({ name: this.state.usernameValue });
-      this.props.onMessage({ username: this.state.usernameValue, content: this.state.messageValue });
-      this.setState({messageValue: ''});
-    }
-  }
+  handleUserChange = (evt) => {
+   if (evt.key === 'Enter')
+   this.props.userText(evt.target.value)
+ }
 
-  onUsernameKeyDown(event) {
-    const ENTER = 13;
-    if (event.keyCode === ENTER) {
-      this.props.onUsernameChange({ name: this.state.usernameValue });
-    }
-  }
+ handleKeyPress = (evt) => {
+   if (evt.key === 'Enter') {
+     this.props.textBox(evt.target.value)
+   }
+ }
 
-  onUsernameChange(event) {
-    this.setState({usernameValue: event.target.value});
-  }
-
-  onMessageChange(event) {
-    this.setState({messageValue: event.target.value});
-  }
-
-  render() {
-    return (
-      <footer className="chatbar">
-        <input className="chatbar-username" placeholder="Your Name (Optional)" onKeyDown={this.onUsernameKeyDown.bind(this)} onChange={this.onUsernameChange.bind(this)} value={this.state.usernameValue} />
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyDown={this.onMessageKeyDown.bind(this)} onChange={this.onMessageChange.bind(this)} value={this.state.messageValue}/>
-      </footer>
-    );
-  }
+ render() {
+   return (
+     <div className="chatbar">
+       <input className="chatbar-username" placeholder={this.props.currentUser.name + " ENTER a Username"} onKeyPress={this.handleUserChange} />
+       <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.handleKeyPress} />
+     </div>
+   )
+ }
 }
 
 export default ChatBar;
