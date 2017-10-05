@@ -36,6 +36,7 @@ h1 {
       line-height: 40px;
       margin: 5px;
       padding: 0 9px;
+
     }
 
     .chatbar-message {
@@ -64,7 +65,11 @@ h1 {
       margin: 5px;
       padding: 0 10px;
 
+
     }
+      .message-username {
+
+      }
 
     .message-content {
       flex: 8;
@@ -74,12 +79,14 @@ h1 {
     }
 
     .message-username {
-      flex: 1;
-      font-weight: 700;
+      flex: 2;
+      font-weight: 600;
       color:white;
     background-color: #32cd32;
      border-radius:20px;
-     width: 10%;
+       text-align: center;
+     padding: 5px;
+     font-size: 12px;
     }
 
     .navbar {
