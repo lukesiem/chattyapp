@@ -17,7 +17,7 @@ Change back to the root directory and start the web server with npm start
 Screenshot
 =====================
 
-
+!["Sreenshot"](https://github.com/lukesiem/chattyapp/blob/master/docs/Screen%20Shot%202017-10-06%20at%207.35.59%20AM.png?raw=true)
 
 
 Dependencies
