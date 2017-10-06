@@ -4,6 +4,7 @@ const express = require('express');
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 
+
 // Set the port to 3001
 const PORT = 3001;
 
@@ -23,7 +24,6 @@ const wss = new SocketServer({ server });
 wss.broadcast = function (data) {
   wss.clients.forEach(function(client) {
     if (client.readyState === client.OPEN) {
-      console.log("inside broadcast function")
       client.send(data);
     }
   })
@@ -37,6 +37,7 @@ wss.on('connection', (ws) => {
   let  newConnect = {
     type: "incomingConnectNotification",
     id: uuidv4(),
+
     content: "New User Has Arrived!"
    }
    console.log(newConnect);
@@ -46,7 +47,7 @@ wss.on('connection', (ws) => {
 
 
   let clients = {
-    type: "incomingSize",
+    type: "newSize",
     size: wss.clients.size
   }
   let clientSize = JSON.stringify(clients)
@@ -54,23 +55,23 @@ wss.on('connection', (ws) => {
   wss.broadcast(clientSize)
 
     ws.on('message', function incoming(message) {
-    messageJS = JSON.parse(message)
+    messageX = JSON.parse(message)
 
-    if (messageJS.type === "postMessage") {
-      messageJS.id = uuidv4()
-      messageJS.type = "incomingMessage"
+    if (messageX.type === "postMessage") {
+      messageX.id = uuidv4()
+      messageX.type = "incomingMessage"
 
 
-      message = JSON.stringify(messageJS)
+      message = JSON.stringify(messageX)
 
 wss.broadcast(message)
 
-    } else if (messageJS.type === "postNotification") {
-      messageJS.type = "incomingNotification"
-      messageJS.id = uuidv4()
+    } else if (messageX.type === "postNotification") {
+      messageX.type = "incomingNotification"
+      messageX.id = uuidv4()
 
-    
-      message = JSON.stringify(messageJS)
+
+      message = JSON.stringify(messageX)
 
 
       wss.broadcast(message)

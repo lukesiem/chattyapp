@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-
+//left over from an older version. this code doesn't come into play much.
 class Message extends Component {
   render() {
     if (this.props.type === "incomingNotification") {

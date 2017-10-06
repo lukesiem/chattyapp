@@ -16,14 +16,15 @@ class App extends Component {
     this.socket = new WebSocket("ws://localhost:3001/");
      console.log('Connected to server')
      this.socket.onmessage = (event) => {
-        let incomingMsg = JSON.parse(event.data);
-        switch (incomingMsg.type) {
+       //handles different kinds of messages
+        let messageEvent = JSON.parse(event.data);
+        switch (messageEvent.type) {
         case "incomingMessage":
           let serverNewMessageInfo = [...this.state.messages, {
-            type: incomingMsg.type,
-            id: incomingMsg.id,
-            username: incomingMsg.username,
-            content: incomingMsg.content
+            type: messageEvent.type,
+            id: messageEvent.id,
+            username: messageEvent.username,
+            content: messageEvent.content
           }]
 
           this.setState({ messages: serverNewMessageInfo })
@@ -31,39 +32,39 @@ class App extends Component {
         case "incomingNotification":
           let notification = [...this.state.messages, {
             type: "incomingNotification",
-            id: incomingMsg.id,
-            oldUser: incomingMsg.oldUser,
-            newUser: incomingMsg.newUser
+            id: messageEvent.id,
+            previousUserName: messageEvent.previousUserName,
+            newUser: messageEvent.newUser
           }]
           this.setState({ messages: notification })
           break
         case "incomingConnectNotification":
           let userNotification = [...this.state.messages, {
-            type: incomingMsg.type,
-            id: incomingMsg.id,
-            content: incomingMsg.content
+            type: messageEvent.type,
+            id: messageEvent.id,
+            content: messageEvent.content
           }]
           this.setState({ messages: userNotification})
           break
-        case "incomingSize":
-        console.log("SIIIIIIIIIZZZZZEEEEEE", incomingMsg.size)
-          this.setState({ size: incomingMsg.size })
+        case "newSize":
+
+          this.setState({ size: messageEvent.size })
           break
       }
     }
   }
-
+// handles user name change
   userChanger = (change) => {
     let notificationMessage = {
       type: "postNotification",
-      oldUser: this.state.currentUser.name,
+      previousUserName: this.state.currentUser.name,
       newUser: change
     }
     this.setState({ currentUser: { name: change } })
 
     this.socket.send(JSON.stringify(notificationMessage))
   }
-
+//handles new message post
   addNewMsg = (msg) => {
     let newMessageInfo = {
       type: "postMessage",

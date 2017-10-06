@@ -22,7 +22,7 @@ import React, {Component} from 'react';
         return (
           <div className="message" key={message.id}>
             <div className="message system">
-              {message.oldUser} changed their username to {message.newUser}
+              {message.previousUserName} changed their username to {message.newUser}
             </div>
           </div>
         )
